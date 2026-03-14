@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - Administration SportsField</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --sidebar-bg: #0f172a;
+            --sidebar-hover: #1e293b;
+            --bg-color: #f8fafc;
+            --text-heading: #0f172a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .wrapper { display: flex; width: 100%; align-items: stretch; min-height: 100vh; }
+
+        /* Sidebar */
+        #sidebar {
+            min-width: 250px; max-width: 250px; background: var(--sidebar-bg); color: #cbd5e1;
+            position: sticky; top: 0; height: 100vh; overflow-y: auto;
+        }
+        #sidebar .sidebar-header { padding: 20px; background: rgba(0,0,0,0.1); }
+        #sidebar ul.components { padding: 20px 0; }
+        #sidebar ul li a {
+            padding: 12px 20px; font-size: 0.95rem; display: flex; align-items: center; gap: 12px;
+            color: #cbd5e1; text-decoration: none; transition: 0.2s;
+        }
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: #fff; background: var(--sidebar-hover); border-left: 4px solid var(--primary-color);
+        }
+
+        /* Contenu Principal */
+        #content { width: 100%; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        .top-navbar { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .main-content { padding: 30px; flex-grow: 1; }
+
+        /* Conteneurs et Formulaires */
+        .settings-card {
+            background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 30px;
+        }
+
+        /* Navigation des paramètres (Tabs verticaux) */
+        .nav-pills .nav-link {
+            color: #475569;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-pills .nav-link:hover {
+            background-color: #f1f5f9;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Styling des inputs */
+        .form-label {
+            font-weight: 600;
+            color: #334155;
+            font-size: 0.9rem;
+        }
+
+        .form-control, .form-select {
+            border-color: #e2e8f0;
+            padding: 10px 15px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.1);
+        }
+
+        /* Switches (Toggle) */
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header d-flex align-items-center gap-2">
+            <div class="logo-box" style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SF</div>
+            <h5 class="mb-0 text-white fw-bold">SportsField</h5>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="px-3 mb-2 text-uppercase small text-muted fw-bold">Super-Admin</li>
+            <li>
+                <a href="dashboard-superadmin.html"><i class="bi bi-speedometer2"></i> Acceuil</a>
+            </li>
+            <li>
+                <a href="admin-clubs.html"><i class="bi bi-buildings"></i> Gestion des Clubs</a>
+            </li>
+            <li>
+                <a href="admin-users.html"><i class="bi bi-people"></i> Utilisateurs</a>
+            </li>
+            <li>
+                <a href="admin-reservations.html"><i class="bi bi-calendar-check"></i> Réservations Globales</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-envelope"></i> Demandes</a>
+            </li>
+            <li class="mt-4 px-3 mb-2 text-uppercase small text-muted fw-bold">Paramètres</li>
+            <li class="active">
+                <a href="admin-settings.html"><i class="bi bi-gear"></i> Paramètres Plateforme</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="top-navbar">
+            <div>
+                <h4 class="mb-0 fw-bold" style="color: var(--text-heading);">Paramètres</h4>
+                <p class="text-muted small mb-0">Gérez les configurations globales de SportsField</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="dropdownUser" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Youssef&background=2563eb&color=fff" alt="Profile" width="36" height="36" class="rounded-circle me-2">
+                        <strong>Youssef</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="settings-card p-3">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button class="nav-link active" id="v-pills-general-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general" type="button" role="tab">
+                                <i class="bi bi-globe"></i> Général
+                            </button>
+                            <button class="nav-link" id="v-pills-finance-tab" data-bs-toggle="pill" data-bs-target="#v-pills-finance" type="button" role="tab">
+                                <i class="bi bi-credit-card"></i> Finance & Commission
+                            </button>
+                            <button class="nav-link" id="v-pills-notifications-tab" data-bs-toggle="pill" data-bs-target="#v-pills-notifications" type="button" role="tab">
+                                <i class="bi bi-bell"></i> Notifications
+                            </button>
+                            <button class="nav-link" id="v-pills-security-tab" data-bs-toggle="pill" data-bs-target="#v-pills-security" type="button" role="tab">
+                                <i class="bi bi-shield-lock"></i> Sécurité
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="settings-card">
+                        <div class="tab-content" id="v-pills-tabContent">
+
+                            <div class="tab-pane fade show active" id="v-pills-general" role="tabpanel">
+                                <h5 class="fw-bold border-bottom pb-3 mb-4">Informations Générales</h5>
+                                <form>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nom de la plateforme</label>
+                                            <input type="text" class="form-control" value="SportsField" placeholder="Ex: SportsField">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Email de contact (Support)</label>
+                                            <input type="email" class="form-control" value="support@sportsfield.ma">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Téléphone du support</label>
+                                            <input type="text" class="form-control" value="+212 5 00 00 00 00">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Langue par défaut</label>
+                                            <select class="form-select">
+                                                <option value="fr" selected>Français</option>
+                                                <option value="ar">Arabe</option>
+                                                <option value="en">Anglais</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Adresse physique du siège</label>
+                                            <textarea class="form-control" rows="2">Kénitra, Maroc</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 text-end">
+                                        <button type="submit" class="btn btn-primary px-4">Sauvegarder les modifications</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-finance" role="tabpanel">
+                                <h5 class="fw-bold border-bottom pb-3 mb-4">Configuration Financière</h5>
+                                <form>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Devise de la plateforme</label>
+                                            <select class="form-select">
+                                                <option value="MAD" selected>Dirham Marocain (MAD)</option>
+                                                <option value="EUR">Euro (€)</option>
+                                                <option value="USD">Dollar ($)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Commission sur les réservations (%)</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" value="10" min="0" max="100">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            <div class="form-text small">Ce pourcentage sera déduit des revenus des clubs pour chaque réservation effectuée via la plateforme.</div>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="taxSwitch" checked>
+                                                <label class="form-check-label fw-semibold" for="taxSwitch">Inclure la TVA dans les prix affichés</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="autoPayoutSwitch">
+                                                <label class="form-check-label fw-semibold" for="autoPayoutSwitch">Virements automatiques vers les clubs (Fin de mois)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 text-end">
+                                        <button type="submit" class="btn btn-primary px-4">Sauvegarder les modifications</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel">
+                                <h5 class="fw-bold border-bottom pb-3 mb-4">Préférences de Notifications</h5>
+                                <form>
+                                    <p class="text-muted small mb-4">Choisissez les événements pour lesquels vous souhaitez recevoir une notification par email (sur l'adresse Super-Admin).</p>
+
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold mb-3">Activité des Clubs</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifNewClub" checked>
+                                            <label class="form-check-label" for="notifNewClub">Nouvelle demande d'inscription d'un club</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifClubUpdate">
+                                            <label class="form-check-label" for="notifClubUpdate">Modification importante d'un club (Nom, Adresse)</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold mb-3">Réservations et Finance</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifLargeRes">
+                                            <label class="form-check-label" for="notifLargeRes">Réservation d'un montant anormalement élevé</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="notifDispute" checked>
+                                            <label class="form-check-label" for="notifDispute">Signalement ou litige sur une réservation</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4 text-end">
+                                        <button type="submit" class="btn btn-primary px-4">Mettre à jour les notifications</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="v-pills-security" role="tabpanel">
+                                <h5 class="fw-bold border-bottom pb-3 mb-4">Sécurité du Compte Admin</h5>
+                                <form>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label">Mot de passe actuel</label>
+                                            <input type="password" class="form-control" placeholder="••••••••">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nouveau mot de passe</label>
+                                            <input type="password" class="form-control" placeholder="••••••••">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Confirmer le nouveau mot de passe</label>
+                                            <input type="password" class="form-control" placeholder="••••••••">
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-3 border-top">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="fw-bold mb-1">Authentification à deux facteurs (2FA)</h6>
+                                                <p class="text-muted small mb-0">Ajoutez une couche de sécurité supplémentaire à votre compte administrateur.</p>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-primary">Activer 2FA</button>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 text-end">
+                                        <button type="submit" class="btn btn-primary px-4">Mettre à jour la sécurité</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

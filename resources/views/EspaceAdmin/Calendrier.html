@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning & Calendrier - Kénitra City Arena</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --primary-dark: #0369a1;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --bg-color: #f1f5f9;
+            --text-heading: #0f172a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: var(--sidebar-bg);
+            color: #cbd5e1;
+            transition: all 0.3s;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul li a {
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: #fff;
+            background: var(--sidebar-hover);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Contenu Principal */
+        #content {
+            width: 100%;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* Toolbar Calendrier */
+        .calendar-toolbar {
+            background: white;
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Grille du Calendrier (Tableau) */
+        .calendar-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .calendar-table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        .calendar-table th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            text-align: center;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .time-col {
+            width: 80px;
+            background-color: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.9rem;
+            vertical-align: middle !important;
+        }
+
+        /* Créneaux */
+        .slot-cell {
+            height: 80px;
+            transition: background-color 0.2s;
+            position: relative;
+            padding: 6px !important;
+        }
+
+        .slot-cell.empty {
+            cursor: pointer;
+        }
+
+        .slot-cell.empty:hover {
+            background-color: #f1f5f9;
+        }
+
+        .slot-cell.empty:hover::after {
+            content: "+ Réserver";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        /* Cartes de réservation dans la grille */
+        .booking-card {
+            border-radius: 8px;
+            padding: 8px 12px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+
+        .booking-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        .booking-paid {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+            color: #065f46;
+        }
+
+        .booking-pending {
+            background-color: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+        }
+
+        .booking-maintenance {
+            background-color: #fee2e2;
+            border: 2px dashed #ef4444;
+            color: #991b1b;
+            cursor: not-allowed;
+            align-items: center;
+            text-align: center;
+        }
+
+        .booking-card .b-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .booking-card .b-info {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.8;
+        }
+
+        /* Légende */
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header d-flex align-items-center gap-2">
+            <div class="logo-box" style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">KC</div>
+            <div>
+                <h6 class="mb-0 text-white fw-bold">Kénitra Arena</h6>
+                <small class="text-muted" style="font-size: 0.7rem;">Espace Gérant</small>
+            </div>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="px-3 mb-2 text-uppercase small text-muted fw-bold">Mon Club</li>
+            <li>
+                <a href="#"><i class="bi bi-speedometer2"></i> Tableau de bord</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-layout-split"></i> Mes Terrains</a>
+            </li>
+            <li class="active">
+                <a href="#"><i class="bi bi-calendar-week"></i> Planning & Calendrier</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-card-list"></i> Liste des Réservations</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-wallet2"></i> Finances & Revenus</a>
+            </li>
+
+            <li class="mt-4 px-3 mb-2 text-uppercase small text-muted fw-bold">Configuration</li>
+            <li>
+                <a href="#"><i class="bi bi-shop"></i> Profil du Club</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-images"></i> Galerie Photos</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-box-arrow-left text-danger"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="top-navbar">
+            <div>
+                <h4 class="mb-0 fw-bold" style="color: var(--text-heading);">Planning des Terrains</h4>
+                <p class="text-muted small mb-0">Gérez les créneaux et les disponibilités de vos installations sur 24h.</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-primary fw-semibold shadow-sm" data-bs-toggle="modal" data-bs-target="#newBookingModal">
+                    <i class="bi bi-plus-lg me-1"></i> Réservation Manuelle
+                </button>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="dropdownUser" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Benali&background=0ea5e9&color=fff" alt="Profile" width="36" height="36" class="rounded-circle me-2">
+                        <strong>Ahmed B.</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="calendar-toolbar">
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></button>
+                    <button class="btn btn-light fw-bold border">Aujourd'hui</button>
+                    <button class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></button>
+
+                    <div class="ms-3 fw-bold fs-5 text-dark">
+                        <i class="bi bi-calendar-event text-primary me-2"></i> Mardi 10 Mars 2026
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-4">
+                    <div class="d-none d-md-flex gap-3 small text-muted fw-semibold">
+                        <div><span class="legend-dot bg-success"></span>Payé</div>
+                        <div><span class="legend-dot bg-warning"></span>Sur place</div>
+                        <div><span class="legend-dot bg-danger"></span>Indisponible</div>
+                    </div>
+
+                    <select class="form-select w-auto fw-semibold border-secondary-subtle">
+                        <option value="all">Tous les terrains (5)</option>
+                        <option value="foot">Terrains Foot (3)</option>
+                        <option value="padel">Terrains Padel (2)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="calendar-wrapper">
+                <table class="calendar-table">
+                    <thead>
+                    <tr>
+                        <th style="width: 80px;"><i class="bi bi-clock"></i></th>
+                        <th class="court-1">Terrain 1 (Foot)</th>
+                        <th class="court-2">Terrain 2 (Couvert)</th>
+                        <th class="court-3">Terrain 3 (Foot)</th>
+                        <th class="court-4">Padel Court A</th>
+                        <th class="court-5">Padel Court B</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="time-col">00:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">01:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">03:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">04:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">06:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">07:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">09:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">10:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">12:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="time-col">13:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    <tr>
+                        <td class="time-col">15:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="time-col">16:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell p-1 court-2">
+                            <div class="booking-card booking-paid">
+                                <div class="b-title">Académie Foot U12</div>
+                                <div class="b-info"><i class="bi bi-credit-card"></i> Payé en ligne</div>
+                            </div>
+                        </td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell p-1 court-4" rowspan="3">
+                            <div class="booking-card booking-maintenance h-100 justify-content-center">
+                                <i class="bi bi-tools fs-4 mb-1"></i>
+                                <div class="b-title">Maintenance</div>
+                                <div class="b-info">Vitre cassée</div>
+                            </div>
+                        </td>
+                        <td class="slot-cell p-1 court-5">
+                            <div class="booking-card booking-pending">
+                                <div class="b-title">Simo & Co</div>
+                                <div class="b-info"><i class="bi bi-cash"></i> À payer (200 MAD)</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="time-col">18:00</td>
+                        <td class="slot-cell p-1 court-1">
+                            <div class="booking-card booking-pending">
+                                <div class="b-title">Equipe FC Kénitra</div>
+                                <div class="b-info"><i class="bi bi-cash"></i> À payer (300 MAD)</div>
+                            </div>
+                        </td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell p-1 court-3">
+                            <div class="booking-card booking-paid">
+                                <div class="b-title">Tournoi Entreprise</div>
+                                <div class="b-info"><i class="bi bi-building"></i> Facturé B2B</div>
+                            </div>
+                        </td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+
+                    <tr>
+                        <td class="time-col">19:30</td>
+                        <td class="slot-cell p-1 court-1">
+                            <div class="booking-card booking-paid">
+                                <div class="b-title">Match Amis (Amine)</div>
+                                <div class="b-info"><i class="bi bi-credit-card"></i> Payé en ligne</div>
+                            </div>
+                        </td>
+                        <td class="slot-cell p-1 court-2">
+                            <div class="booking-card booking-paid">
+                                <div class="b-title">Yassine El Fassi</div>
+                                <div class="b-info"><i class="bi bi-wallet2"></i> Portefeuille In-App</div>
+                            </div>
+                        </td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell p-1 court-5">
+                            <div class="booking-card booking-paid">
+                                <div class="b-title">Karima S.</div>
+                                <div class="b-info"><i class="bi bi-credit-card"></i> Payé en ligne</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="time-col">21:00</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell p-1 court-5">
+                            <div class="booking-card booking-pending">
+                                <div class="b-title">Dernier Match</div>
+                                <div class="b-info"><i class="bi bi-cash"></i> À payer</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="time-col">22:30</td>
+                        <td class="slot-cell empty court-1"></td>
+                        <td class="slot-cell empty court-2"></td>
+                        <td class="slot-cell empty court-3"></td>
+                        <td class="slot-cell empty court-4"></td>
+                        <td class="slot-cell empty court-5"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <nav aria-label="Navigation des terrains" class="mt-4 mb-2" id="court-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled" id="prev-page">
+                        <a class="page-link" href="#" aria-label="Précédent">Précédent</a>
+                    </li>
+                    <li class="page-item active page-number"><a class="page-link" href="#" data-page="1">1</a></li>
+                    <li class="page-item page-number"><a class="page-link" href="#" data-page="2">2</a></li>
+                    <li class="page-item" id="next-page">
+                        <a class="page-link" href="#" aria-label="Suivant">Suivant</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newBookingModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light border-bottom-0">
+                <h5 class="modal-title fw-bold">Ajouter une réservation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">Terrain</label>
+                        <select class="form-select">
+                            <option>Terrain 1 (Foot)</option>
+                            <option>Terrain 2 (Couvert)</option>
+                            <option>Terrain 3 (Foot)</option>
+                            <option>Padel Court A</option>
+                            <option>Padel Court B</option>
+                        </select>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-bold">Date</label>
+                            <input type="date" class="form-control" value="2026-03-10">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-muted small fw-bold">Heure</label>
+                            <select class="form-select">
+                                <option>00:00 - 01:00</option>
+                                <option>02:00 - 03:00</option>
+                                <option>03:00 - 04:00</option>
+                                <option>04:00 - 05:00</option>
+                                <option>05:00 - 06:30</option>
+                                <option>07:30 - 09:00</option>
+                                <option>09:00 - 10:30</option>
+                                <option>10:30 - 12:00</option>
+                                <option>12:00 - 13:30</option>
+                                <option>13:30 - 15:00</option>
+                                <option>15:00 - 16:30</option>
+                                <option>16:30 - 18:00</option>
+                                <option>18:00 - 19:30</option>
+                                <option>19:30 - 21:00</option>
+                                <option>21:00 - 22:30</option>
+                                <option>22:00 - 23:00</option>
+                                <option>23:00 - 00:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">Nom du client</label>
+                        <input type="text" class="form-control" placeholder="Nom complet ou Numéro de téléphone">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">Statut du paiement</label>
+                        <div class="d-flex gap-3 mt-1">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentStatus" id="pay1" checked>
+                                <label class="form-check-label text-warning fw-semibold" for="pay1">À payer sur place</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentStatus" id="pay2">
+                                <label class="form-check-label text-success fw-semibold" for="pay2">Déjà payé (Espèces/TPE)</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer bg-light border-top-0 pt-0 mt-2">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary fw-bold">Bloquer le créneau</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

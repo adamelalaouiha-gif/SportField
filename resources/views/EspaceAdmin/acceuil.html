@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Gérant - Kénitra City Arena</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            /* Changement subtil de couleur pour différencier l'espace Gérant du Super-Admin */
+            --primary-color: #0ea5e9;
+            --primary-dark: #0369a1;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --bg-color: #f1f5f9;
+            --text-heading: #0f172a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: var(--sidebar-bg);
+            color: #cbd5e1;
+            transition: all 0.3s;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul li a {
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: #fff;
+            background: var(--sidebar-hover);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Contenu Principal */
+        #content {
+            width: 100%;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* Cartes Statistiques */
+        .stat-card {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        /* Tableaux */
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .table thead th {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom-width: 1px;
+        }
+
+        .table tbody td {
+            vertical-align: middle;
+            color: #334155;
+        }
+
+        .badge-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .time-slot {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header d-flex align-items-center gap-2">
+            <div class="logo-box" style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">KC</div>
+            <div>
+                <h6 class="mb-0 text-white fw-bold">Kénitra Arena</h6>
+                <small class="text-muted" style="font-size: 0.7rem;">Espace Gérant</small>
+            </div>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="px-3 mb-2 text-uppercase small text-muted fw-bold">Mon Club</li>
+            <li class="active">
+                <a href="#"><i class="bi bi-speedometer2"></i> Tableau de bord</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-layout-split"></i> Mes Terrains</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-calendar-week"></i> Planning & Calendrier</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-card-list"></i> Liste des Réservations</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-wallet2"></i> Finances & Revenus</a>
+            </li>
+
+            <li class="mt-4 px-3 mb-2 text-uppercase small text-muted fw-bold">Configuration</li>
+            <li>
+                <a href="#"><i class="bi bi-shop"></i> Profil du Club</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-images"></i> Galerie Photos</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-box-arrow-left text-danger"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="top-navbar">
+            <div>
+                <h4 class="mb-0 fw-bold" style="color: var(--text-heading);">Aujourd'hui, 10 Mars 2026</h4>
+                <p class="text-muted small mb-0">Bienvenue Ahmed, voici le résumé de votre journée.</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-primary btn-sm fw-semibold shadow-sm">
+                    <i class="bi bi-plus-lg"></i> Nouvelle Réservation
+                </button>
+                <button class="btn btn-light position-relative">
+                    <i class="bi bi-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                </button>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="dropdownUser" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Benali&background=0ea5e9&color=fff" alt="Profile" width="36" height="36" class="rounded-circle me-2">
+                        <strong>Ahmed B.</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Mon Profil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-left me-2"></i>Déconnexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small fw-semibold">Matchs Aujourd'hui</h6>
+                            <h3 class="mb-0 fw-bold">14</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-success bg-opacity-10 text-success">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small fw-semibold">Revenus Estimés (MAD)</h6>
+                            <h3 class="mb-0 fw-bold">3 250</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-info bg-opacity-10 text-info">
+                            <i class="bi bi-layout-split"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small fw-semibold">Terrains Actifs</h6>
+                            <h3 class="mb-0 fw-bold">4 <span class="fs-6 text-muted fw-normal">/ 5</span></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                            <i class="bi bi-hourglass-split"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small fw-semibold">Paiements en attente</h6>
+                            <h3 class="mb-0 fw-bold">3</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="table-card h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0">Prochains Matchs (Aujourd'hui)</h5>
+                            <button class="btn btn-sm btn-outline-primary">Voir le calendrier complet</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Heure</th>
+                                    <th>Terrain</th>
+                                    <th>Client</th>
+                                    <th>Paiement</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><span class="time-slot"><i class="bi bi-clock"></i> 13:00 - 14:30</span></td>
+                                    <td class="fw-semibold">Terrain 1 (Foot 5v5)</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Yassine Amrani</div>
+                                        <small class="text-muted">06 11 22 33 44</small>
+                                    </td>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success border border-success">Payé (En ligne)</span></td>
+                                    <td><span class="badge-status bg-primary bg-opacity-10 text-primary border border-primary"><span class="spinner-grow spinner-grow-sm me-1" style="width: 8px; height: 8px;"></span>En cours</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-light border" title="Plus d'options"><i class="bi bi-three-dots-vertical"></i></button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="time-slot"><i class="bi bi-clock"></i> 18:00 - 19:30</span></td>
+                                    <td class="fw-semibold">Terrain 2 (Foot 5v5)</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Equipe FC Kénitra</div>
+                                        <small class="text-muted">06 99 88 77 66</small>
+                                    </td>
+                                    <td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning">Sur place (300 MAD)</span></td>
+                                    <td><span class="badge-status bg-light text-dark border">À venir</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success" title="Valider paiement"><i class="bi bi-check2-circle"></i></button>
+                                        <button class="btn btn-sm btn-light border" title="Plus d'options"><i class="bi bi-three-dots-vertical"></i></button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="time-slot"><i class="bi bi-clock"></i> 19:00 - 20:30</span></td>
+                                    <td class="fw-semibold">Padel Court A</td>
+                                    <td>
+                                        <div class="fw-semibold text-dark">Karima S.</div>
+                                        <small class="text-muted">06 44 55 66 77</small>
+                                    </td>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success border border-success">Payé (En ligne)</span></td>
+                                    <td><span class="badge-status bg-light text-dark border">À venir</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-light border" title="Plus d'options"><i class="bi bi-three-dots-vertical"></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
