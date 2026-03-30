@@ -10,7 +10,6 @@
 
     <style>
         :root {
-        var(--primary-color): #0ea5e9;
             --primary-color: #0ea5e9;
             --primary-dark: #0369a1;
             --sidebar-bg: #1e293b;
@@ -54,6 +53,8 @@
 
         #sidebar ul.components {
             padding: 20px 0;
+            list-style: none;
+            margin: 0;
         }
 
         #sidebar ul li a {
@@ -71,6 +72,12 @@
             color: #fff;
             background: var(--sidebar-hover);
             border-left: 4px solid var(--primary-color);
+        }
+
+        .sidebar-heading {
+            color: var(--primary-color) !important;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
         }
 
         /* Contenu Principal */
@@ -103,7 +110,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -125,6 +132,12 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: filter 0.3s ease;
+        }
+
+        /* Classe dynamique ajoutée par le JS quand le terrain est hors ligne */
+        .pitch-img.offline {
+            filter: grayscale(100%) opacity(60%);
         }
 
         .pitch-status {
@@ -136,6 +149,7 @@
             font-size: 0.75rem;
             font-weight: bold;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: opacity 0.3s ease;
         }
 
         .pitch-price {
@@ -149,6 +163,13 @@
             font-weight: bold;
             box-shadow: 0 4px 6px rgba(14, 165, 233, 0.3);
             border: 2px solid white;
+            transition: background 0.3s ease;
+        }
+
+        /* Style du prix quand hors ligne */
+        .pitch-price.offline {
+            background: #64748b;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .pitch-body {
@@ -203,10 +224,10 @@
             </div>
         </div>
 
-        <ul class="list-unstyled components">
-            <li class="px-3 mb-2 text-uppercase small text-muted fw-bold">Mon Club</li>
+        <ul class="components">
+            <li class="px-3 mb-2 text-uppercase small fw-bold sidebar-heading">Mon Club</li>
             <li>
-                <a href="#"><i class="bi bi-speedometer2"></i> Tableau de bord</a>
+                <a href="#"><i class="bi bi-speedometer2"></i> Acceuil</a>
             </li>
             <li class="active">
                 <a href="#"><i class="bi bi-layout-split"></i> Mes Terrains</a>
@@ -218,16 +239,14 @@
                 <a href="#"><i class="bi bi-card-list"></i> Liste des Réservations</a>
             </li>
             <li>
-                <a href="#"><i class="bi bi-wallet2"></i> Finances & Revenus</a>
+                <a href="#"><i class="bi bi-cash-coin"></i> Statut des Paiements</a>
             </li>
 
-            <li class="mt-4 px-3 mb-2 text-uppercase small text-muted fw-bold">Configuration</li>
+            <li class="mt-4 px-3 mb-2 text-uppercase small fw-bold sidebar-heading">Configuration</li>
             <li>
                 <a href="#"><i class="bi bi-shop"></i> Profil du Club</a>
             </li>
-            <li>
-                <a href="#"><i class="bi bi-images"></i> Galerie Photos</a>
-            </li>
+
             <li>
                 <a href="#"><i class="bi bi-box-arrow-left text-danger"></i> Déconnexion</a>
             </li>
@@ -254,15 +273,12 @@
         </div>
 
         <div class="main-content">
-
-
-
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
                 <div class="col">
                     <div class="pitch-card">
                         <div class="pitch-img-wrapper">
-                            <span class="pitch-status bg-success text-white"><i class="bi bi-check-circle me-1"></i> Actif</span>
+                            <span class="pitch-status bg-danger text-white d-none offline-badge"><i class="bi bi-eye-slash me-1"></i> Invisible</span>
                             <img src="https://placehold.co/600x400/1e293b/ffffff?text=Terrain+Foot+1" alt="Terrain 1" class="pitch-img">
                             <div class="pitch-price">300 MAD / h</div>
                         </div>
@@ -271,14 +287,12 @@
                                 <h5 class="fw-bold mb-0">Terrain 1 (Principal)</h5>
                                 <span class="badge bg-primary bg-opacity-10 text-primary border border-primary">Foot 5v5</span>
                             </div>
-                            <p class="text-muted small mb-0">Terrain extérieur avec éclairage LED de dernière génération.</p>
-
-
+                            <p class="text-muted small mb-0">Description du terrain en gazon synthétique.</p>
                         </div>
                         <div class="pitch-footer">
                             <div class="form-check form-switch m-0">
-                                <input class="form-check-input" type="checkbox" role="switch" checked id="switch1">
-                                <label class="form-check-label small text-muted" for="switch1">En ligne</label>
+                                <input class="form-check-input toggle-visibility" type="checkbox" role="switch" checked id="switch1">
+                                <label class="form-check-label small fw-bold text-success status-label" for="switch1">En ligne</label>
                             </div>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary" title="Modifier"><i class="bi bi-pencil"></i></button>
@@ -291,7 +305,7 @@
                 <div class="col">
                     <div class="pitch-card">
                         <div class="pitch-img-wrapper">
-                            <span class="pitch-status bg-success text-white"><i class="bi bi-check-circle me-1"></i> Actif</span>
+                            <span class="pitch-status bg-danger text-white d-none offline-badge"><i class="bi bi-eye-slash me-1"></i> Invisible</span>
                             <img src="https://placehold.co/600x400/1e293b/ffffff?text=Terrain+Foot+2" alt="Terrain 2" class="pitch-img">
                             <div class="pitch-price">300 MAD / h</div>
                         </div>
@@ -300,14 +314,12 @@
                                 <h5 class="fw-bold mb-0">Terrain 2 (Couvert)</h5>
                                 <span class="badge bg-primary bg-opacity-10 text-primary border border-primary">Foot 5v5</span>
                             </div>
-                            <p class="text-muted small mb-0">Terrain totalement couvert, idéal pour l'hiver ou les fortes chaleurs.</p>
-
-
+                            <p class="text-muted small mb-0">Description du terrain couvert.</p>
                         </div>
                         <div class="pitch-footer">
                             <div class="form-check form-switch m-0">
-                                <input class="form-check-input" type="checkbox" role="switch" checked id="switch2">
-                                <label class="form-check-label small text-muted" for="switch2">En ligne</label>
+                                <input class="form-check-input toggle-visibility" type="checkbox" role="switch" checked id="switch2">
+                                <label class="form-check-label small fw-bold text-success status-label" for="switch2">En ligne</label>
                             </div>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary" title="Modifier"><i class="bi bi-pencil"></i></button>
@@ -320,27 +332,25 @@
                 <div class="col">
                     <div class="pitch-card">
                         <div class="pitch-img-wrapper">
-                            <span class="pitch-status bg-warning text-dark"><i class="bi bi-tools me-1"></i> Maintenance</span>
-                            <img src="https://placehold.co/600x400/0ea5e9/ffffff?text=Padel+A" alt="Padel A" class="pitch-img" style="filter: grayscale(0.5);">
-                            <div class="pitch-price bg-secondary border-secondary">200 MAD / h</div>
+                            <span class="pitch-status bg-danger text-white offline-badge"><i class="bi bi-eye-slash me-1"></i> Invisible</span>
+                            <img src="https://placehold.co/600x400/0ea5e9/ffffff?text=Padel+A" alt="Padel A" class="pitch-img offline">
+                            <div class="pitch-price offline">200 MAD / h</div>
                         </div>
                         <div class="pitch-body">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h5 class="fw-bold mb-0 text-secondary">Padel Court A</h5>
                                 <span class="badge bg-info bg-opacity-10 text-info border border-info">Padel</span>
                             </div>
-                            <p class="text-muted small mb-0">Changement de la vitre arrière. Indisponible jusqu'à jeudi.</p>
-
-
+                            <p class="text-muted small mb-0">Court panoramique.</p>
                         </div>
                         <div class="pitch-footer bg-light">
                             <div class="form-check form-switch m-0">
-                                <input class="form-check-input" type="checkbox" role="switch" id="switch3" disabled>
-                                <label class="form-check-label small text-muted" for="switch3">Hors ligne</label>
+                                <input class="form-check-input toggle-visibility" type="checkbox" role="switch" id="switch3">
+                                <label class="form-check-label small fw-bold text-muted status-label" for="switch3">Hors ligne</label>
                             </div>
                             <div>
                                 <button class="btn btn-sm btn-outline-secondary" title="Modifier"><i class="bi bi-pencil"></i></button>
-                                <button class="btn btn-sm btn-success ms-1" title="Terminer maintenance"><i class="bi bi-wrench-adjustable-circle"></i></button>
+                                <button class="btn btn-sm btn-outline-danger ms-1" title="Indisponibilité / Bloquer"><i class="bi bi-calendar-x"></i></button>
                             </div>
                         </div>
                     </div>
@@ -413,28 +423,6 @@
                             <label class="form-label text-muted small fw-bold">Description courte</label>
                             <textarea class="form-control" rows="2" placeholder="Informations additionnelles pour les joueurs..."></textarea>
                         </div>
-
-                        <div class="col-12 mt-3">
-                            <label class="form-label text-muted small fw-bold d-block mb-3">Équipements inclus</label>
-                            <div class="d-flex gap-4 flex-wrap">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="eq1" checked>
-                                    <label class="form-check-label" for="eq1"><i class="bi bi-dribbble me-1"></i> Ballons</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="eq2" checked>
-                                    <label class="form-check-label" for="eq2"><i class="bi bi-person-badge me-1"></i> Chasubles</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="eq3">
-                                    <label class="form-check-label" for="eq3"><i class="bi bi-camera-video me-1"></i> Caméra (Enregistrement)</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="eq4" checked>
-                                    <label class="form-check-label" for="eq4"><i class="bi bi-stopwatch me-1"></i> Panneau score</label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -447,5 +435,43 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const switches = document.querySelectorAll('.toggle-visibility');
+
+        switches.forEach(function(toggleSwitch) {
+            toggleSwitch.addEventListener('change', function() {
+                // Trouver les éléments de la carte correspondante
+                const card = this.closest('.pitch-card');
+                const label = card.querySelector('.status-label');
+                const image = card.querySelector('.pitch-img');
+                const priceBadge = card.querySelector('.pitch-price');
+                const offlineBadge = card.querySelector('.offline-badge');
+
+                if (this.checked) {
+                    // Passage EN LIGNE
+                    label.textContent = 'En ligne';
+                    label.classList.remove('text-muted');
+                    label.classList.add('text-success');
+
+                    image.classList.remove('offline');
+                    priceBadge.classList.remove('offline');
+                    offlineBadge.classList.add('d-none'); // Cacher le badge invisible
+                } else {
+                    // Passage HORS LIGNE
+                    label.textContent = 'Hors ligne';
+                    label.classList.remove('text-success');
+                    label.classList.add('text-muted');
+
+                    image.classList.add('offline');
+                    priceBadge.classList.add('offline');
+                    offlineBadge.classList.remove('d-none'); // Afficher le badge invisible
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

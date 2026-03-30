@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration - Kénitra City Arena</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --primary-dark: #0369a1;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --bg-color: #f1f5f9;
+            --text-heading: #0f172a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Layout */
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: var(--sidebar-bg);
+            color: #cbd5e1;
+            transition: all 0.3s;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul li a {
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: #fff;
+            background: var(--sidebar-hover);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Classe pour les titres de la sidebar */
+        .sidebar-heading {
+            color: var(--primary-color) !important;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        /* Contenu Principal */
+        #content {
+            width: 100%;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-navbar {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-content {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* Menu Paramètres (Gauche) */
+        .settings-nav {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .settings-nav .list-group-item {
+            border: none;
+            padding: 15px 20px;
+            color: #475569;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .settings-nav .list-group-item:hover {
+            background-color: #f8fafc;
+            color: var(--primary-color);
+        }
+
+        .settings-nav .list-group-item.active {
+            background-color: #f0f9ff;
+            color: var(--primary-dark);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Contenu Paramètres (Droite) */
+        .settings-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 30px;
+            border: none;
+        }
+
+        .settings-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        /* Logo Upload */
+        .logo-upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Horaires Table */
+        .hours-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .day-name {
+            width: 120px;
+            font-weight: 600;
+            color: #334155;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header d-flex align-items-center gap-2">
+            <div class="logo-box" style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">KC</div>
+            <div>
+                <h6 class="mb-0 text-white fw-bold">Kénitra Arena</h6>
+                <small class="text-muted" style="font-size: 0.7rem;">Espace Gérant</small>
+            </div>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="px-3 mb-2 text-uppercase small fw-bold sidebar-heading">Mon Club</li>
+            <li>
+                <a href="#"><i class="bi bi-speedometer2"></i> Acceuil</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-layout-split"></i> Mes Terrains</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-calendar-week"></i> Planning & Calendrier</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-card-list"></i> Liste des Réservations</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-cash-coin"></i> Statut des Paiements</a>
+            </li>
+
+            <li class="mt-4 px-3 mb-2 text-uppercase small fw-bold sidebar-heading">Configuration</li>
+            <li class="active">
+                <a href="#"><i class="bi bi-shop"></i> Profil du Club</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-images"></i> Galerie Photos</a>
+            </li>
+            <li>
+                <a href="#"><i class="bi bi-box-arrow-left text-danger"></i> Déconnexion</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="top-navbar">
+            <div>
+                <h4 class="mb-0 fw-bold" style="color: var(--text-heading);">Configuration du Club</h4>
+                <p class="text-muted small mb-0">Modifiez les informations de votre complexe sportif.</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-success fw-semibold shadow-sm px-4">
+                    <i class="bi bi-save me-1"></i> Enregistrer
+                </button>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark" id="dropdownUser" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+Benali&background=0ea5e9&color=fff" alt="Profile" width="36" height="36" class="rounded-circle me-2">
+                        <strong>Ahmed B.</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="row g-4">
+
+                <div class="col-md-3">
+                    <div class="settings-nav list-group" id="settingsTabs" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="general-tab" data-bs-toggle="list" href="#general" role="tab">
+                            <i class="bi bi-info-circle me-2"></i> Informations Générales
+                        </a>
+                        <a class="list-group-item list-group-item-action" id="hours-tab" data-bs-toggle="list" href="#hours" role="tab">
+                            <i class="bi bi-clock me-2"></i> Horaires d'ouverture
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="tab-content" id="settingsTabsContent">
+
+                        <div class="tab-pane fade show active" id="general" role="tabpanel">
+                            <div class="settings-card">
+                                <div class="settings-header">
+                                    <h5 class="fw-bold mb-0">Informations Générales</h5>
+                                    <small class="text-muted">Ces informations sont visibles par les joueurs.</small>
+                                </div>
+
+                                <div class="logo-upload-wrapper">
+                                    <div class="logo-preview">KC</div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Logo du Club</h6>
+                                        <p class="text-muted small mb-2">Format recommandé : Carré (PNG, JPG). Max 2 Mo.</p>
+                                        <button class="btn btn-sm btn-outline-primary"><i class="bi bi-upload me-1"></i> Modifier le logo</button>
+                                    </div>
+                                </div>
+
+                                <form class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Nom du Club <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" value="Kénitra City Arena">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Téléphone <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white">+212</span>
+                                            <input type="text" class="form-control" value="6 12 34 56 78">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Adresse complète <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" value="15 Avenue Hassan II, Centre-ville, Kénitra">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Description du Club</label>
+                                        <textarea class="form-control" rows="4">Kénitra City Arena est le complexe sportif de référence au cœur de Kénitra. Nous proposons 3 terrains de Foot 5v5 (dont 1 couvert) en gazon synthétique dernière génération et 2 terrains de Padel panoramiques.</textarea>
+                                        <small class="text-muted">Parlez de vos installations, de l'ambiance et de ce qui vous rend unique.</small>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="hours" role="tabpanel">
+                            <div class="settings-card">
+                                <div class="settings-header">
+                                    <h5 class="fw-bold mb-0">Horaires d'ouverture</h5>
+                                    <small class="text-muted">Définissez vos heures d'ouverture standard pour les réservations.</small>
+                                </div>
+
+                                <div class="hours-container">
+                                    <div class="hours-row">
+                                        <div class="day-name">Lundi</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="09:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="23:30">
+                                        </div>
+                                    </div>
+                                    <div class="hours-row">
+                                        <div class="day-name">Mardi</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="09:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="23:30">
+                                        </div>
+                                    </div>
+                                    <div class="hours-row">
+                                        <div class="day-name">Mercredi</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="09:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="23:30">
+                                        </div>
+                                    </div>
+                                    <div class="hours-row">
+                                        <div class="day-name">Jeudi</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="09:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="23:30">
+                                        </div>
+                                    </div>
+                                    <div class="hours-row">
+                                        <div class="day-name">Vendredi</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="09:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="23:30">
+                                        </div>
+                                    </div>
+                                    <div class="hours-row bg-light rounded px-2">
+                                        <div class="day-name text-primary">Samedi</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="08:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="00:00">
+                                        </div>
+                                    </div>
+                                    <div class="hours-row bg-light rounded px-2 mt-1">
+                                        <div class="day-name text-primary">Dimanche</div>
+                                        <div class="form-check form-switch me-4">
+                                            <input class="form-check-input" type="checkbox" role="switch" checked>
+                                            <label class="form-check-label small text-muted">Ouvert</label>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                            <input type="time" class="form-control form-control-sm w-auto" value="08:00">
+                                            <span class="text-muted">à</span>
+                                            <input type="time" class="form-control form-control-sm w-auto" value="00:00">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

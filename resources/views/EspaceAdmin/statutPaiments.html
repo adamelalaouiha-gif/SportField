@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statut des Paiements - Kénitra City Arena</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --primary-dark: #0369a1;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --bg-color: #f1f5f9;
+            --text-heading: #0f172a;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+        }
+
+        /* Layout & Sidebar */
+        .wrapper { display: flex; width: 100%; align-items: stretch; min-height: 100vh; }
+        #sidebar { min-width: 250px; max-width: 250px; background: var(--sidebar-bg); color: #cbd5e1; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+        #sidebar .sidebar-header { padding: 20px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        #sidebar ul.components { padding: 20px 0; margin: 0; list-style: none; }
+        #sidebar ul li a { padding: 12px 20px; font-size: 0.95rem; display: flex; align-items: center; gap: 12px; color: #cbd5e1; text-decoration: none; transition: 0.2s; }
+        #sidebar ul li a:hover, #sidebar ul li.active > a { color: #fff; background: var(--sidebar-hover); border-left: 4px solid var(--primary-color); }
+
+        /* Ajout de la classe pour les titres de la sidebar */
+        .sidebar-heading {
+            color: var(--primary-color) !important;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        /* Contenu Principal */
+        #content { width: 100%; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+        .top-navbar { background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .main-content { padding: 30px; flex-grow: 1; }
+
+        /* Cartes de résumé simplifiées */
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .summary-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Tableau de statut */
+        .status-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .status-card-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table > :not(caption) > * > * {
+            padding: 1rem 1.25rem;
+            vertical-align: middle;
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header d-flex align-items-center gap-2">
+            <div class="logo-box" style="width: 32px; height: 32px; background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">KC</div>
+            <div>
+                <h6 class="mb-0 text-white fw-bold">Kénitra Arena</h6>
+                <small class="text-muted" style="font-size: 0.7rem;">Espace Gérant</small>
+            </div>
+        </div>
+
+        <ul class="components">
+            <li class="px-3 mb-2 text-uppercase small fw-bold sidebar-heading">Mon Club</li>
+            <li><a href="#"><i class="bi bi-speedometer2"></i> Acceuil</a></li>
+            <li><a href="#"><i class="bi bi-layout-split"></i> Mes Terrains</a></li>
+            <li><a href="#"><i class="bi bi-calendar-week"></i> Planning & Calendrier</a></li>
+            <li><a href="#"><i class="bi bi-card-list"></i> Liste des Réservations</a></li>
+            <li class="active"><a href="#"><i class="bi bi-cash-coin"></i> Statut des Paiements</a></li>
+
+            <li class="mt-4 px-3 mb-2 text-uppercase small fw-bold sidebar-heading">Configuration</li>
+            <li><a href="#"><i class="bi bi-shop"></i> Profil du Club</a></li>
+
+            <li><a href="#"><i class="bi bi-box-arrow-left text-danger"></i> Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <div class="top-navbar">
+            <div>
+                <h4 class="mb-0 fw-bold" style="color: var(--text-heading);">Statut des Paiements</h4>
+                <p class="text-muted small mb-0">Suivez et mettez à jour les encaissements du jour.</p>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-decoration-none text-dark" data-bs-toggle="dropdown">
+                    <img src="https://ui-avatars.com/api/?name=Youssef&background=0ea5e9&color=fff" alt="Profile" width="36" height="36" class="rounded-circle me-2">
+                    <strong>Youssef</strong>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="summary-card">
+                        <div class="summary-icon bg-primary bg-opacity-10 text-primary">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small text-uppercase fw-bold">Total Attendu (Aujourd'hui)</h6>
+                            <h4 class="fw-bold mb-0">2 400 DH</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="summary-card">
+                        <div class="summary-icon bg-success bg-opacity-10 text-success">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small text-uppercase fw-bold">Déjà Encaissé</h6>
+                            <h4 class="fw-bold mb-0 text-success">1 800 DH</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="summary-card border-danger border-opacity-25">
+                        <div class="summary-icon bg-danger bg-opacity-10 text-danger">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div>
+                            <h6 class="text-muted mb-1 small text-uppercase fw-bold">Reste à percevoir</h6>
+                            <h4 class="fw-bold mb-0 text-danger">600 DH</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-card-header">
+                    <div class="d-flex gap-2">
+                        <select class="form-select form-select-sm" style="width: 150px;">
+                            <option>Aujourd'hui</option>
+                            <option>Hier</option>
+                            <option>Cette semaine</option>
+                        </select>
+                        <select class="form-select form-select-sm" style="width: 150px;">
+                            <option>Tous les statuts</option>
+                            <option>En attente</option>
+                            <option>Payé</option>
+                        </select>
+                    </div>
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Chercher un client...">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light text-muted small text-uppercase">
+                        <tr>
+                            <th>ID Réservation</th>
+                            <th>ID Client</th>
+                            <th>Date</th>
+                            <th>Heure</th>
+                            <th>Terrain</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Type de Paiement</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr>
+                            <td><span class="fw-semibold text-primary">#RES-1042</span></td>
+                            <td>
+                                <div class="fw-bold text-dark">#CL-089</div>
+                                <small class="text-muted">Karim El Fassi</small>
+                            </td>
+                            <td><span class="fw-semibold text-dark">Aujourd'hui</span></td>
+                            <td><span class="text-muted">18:00 - 19:30</span></td>
+                            <td>Foot 5v5 (T1)</td>
+                            <td class="fw-bold">300 DH</td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Terminée</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning text-dark border border-warning px-2 py-1">
+                                    <i class="bi bi-shop me-1"></i>Sur place
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-success action-btn shadow-sm">
+                                    <i class="bi bi-check2"></i> Marquer Payé
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><span class="fw-semibold text-primary">#RES-1043</span></td>
+                            <td>
+                                <div class="fw-bold text-dark">#CL-102</div>
+                                <small class="text-muted">Amine Mansouri</small>
+                            </td>
+                            <td><span class="fw-semibold text-dark">Aujourd'hui</span></td>
+                            <td><span class="text-muted">19:30 - 21:00</span></td>
+                            <td>Padel (C2)</td>
+                            <td class="fw-bold">200 DH</td>
+                            <td>
+                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1">Pas venue</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-warning text-dark border border-warning px-2 py-1">
+                                    <i class="bi bi-shop me-1"></i>Sur place
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-outline-success action-btn shadow-sm">
+                                    <i class="bi bi-check2"></i> Marquer Payé
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-light bg-opacity-50">
+                            <td><span class="text-muted">#RES-1046</span></td>
+                            <td>
+                                <div class="fw-bold text-muted">#CL-045</div>
+                                <small class="text-muted">Omar Bennis</small>
+                            </td>
+                            <td><span class="text-muted">Hier</span></td>
+                            <td><span class="text-muted">20:00 - 21:30</span></td>
+                            <td>Foot 5v5 (T1)</td>
+                            <td class="text-muted">300 DH</td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Terminée</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">
+                                    <i class="bi bi-cash-coin me-1"></i>Payé sur place
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-outline-secondary btn-sm action-btn" disabled>
+                                    <i class="bi bi-check-all"></i> Encaissé
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-light bg-opacity-50">
+                            <td><span class="text-muted">#RES-1044</span></td>
+                            <td>
+                                <div class="fw-bold text-muted">#CL-210</div>
+                                <small class="text-muted">Ilyass Hajji</small>
+                            </td>
+                            <td><span class="text-muted">17 Mars 2026</span></td>
+                            <td><span class="text-muted">15:00 - 16:30</span></td>
+                            <td>Foot 5v5 (T2)</td>
+                            <td class="text-muted">300 DH</td>
+                            <td>
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">Terminée</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-2 py-1">
+                                    <i class="bi bi-credit-card me-1"></i>Payé en ligne
+                                </span>
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-outline-secondary btn-sm action-btn" disabled>
+                                    <i class="bi bi-check-all"></i> Encaissé
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-light bg-opacity-50">
+                            <td><span class="text-muted">#RES-1045</span></td>
+                            <td>
+                                <div class="fw-bold text-muted">#CL-156</div>
+                                <small class="text-muted">Youssef Alaoui</small>
+                            </td>
+                            <td><span class="text-muted">16 Mars 2026</span></td>
+                            <td><span class="text-muted">10:00 - 11:30</span></td>
+                            <td>Foot 7v7 (T3)</td>
+                            <td class="text-muted">400 DH</td>
+                            <td>
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 px-2 py-1">Annulé</span>
+                            </td>
+                            <td>
+                                <span class="text-muted small">-</span>
+                            </td>
+                            <td class="text-end">
+                                <button class="btn btn-outline-secondary btn-sm action-btn" disabled>
+                                    Annulé
+                                </button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center p-3 border-top bg-white">
+                    <span class="text-muted small">Affichage de 1 à 5 sur 18 paiements</span>
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li class="page-item disabled"><a class="page-link" href="#">Précédent</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

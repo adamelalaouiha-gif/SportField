@@ -121,7 +121,7 @@
             color: #9ca3af;
         }
 
-        /* Upload Images */
+        /* Upload Images (Format original) */
         .image-upload-area {
             border: 2px dashed #d1d5db;
             border-radius: 12px;
@@ -250,7 +250,7 @@
             font-weight: 600;
         }
 
-        /* Nouveau Footer CSS */
+        /* Footer */
         footer {
             background-color: #0f172a;
             color: #cbd5e1;
@@ -329,19 +329,23 @@
             <div class="progress-indicator mb-4">
                 <div class="progress-step active" data-step="1">
                     <div class="progress-step-circle">1</div>
-                    <div class="progress-step-label">Informations</div>
+                    <div class="progress-step-label">Responsable</div>
                 </div>
                 <div class="progress-step" data-step="2">
                     <div class="progress-step-circle">2</div>
-                    <div class="progress-step-label">Sports</div>
+                    <div class="progress-step-label">Club</div>
                 </div>
                 <div class="progress-step" data-step="3">
                     <div class="progress-step-circle">3</div>
-                    <div class="progress-step-label">Tarifs</div>
+                    <div class="progress-step-label">Sports</div>
                 </div>
                 <div class="progress-step" data-step="4">
                     <div class="progress-step-circle">4</div>
-                    <div class="progress-step-label">Photos</div>
+                    <div class="progress-step-label">Tarifs</div>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="progress-step-circle">5</div>
+                    <div class="progress-step-label">Fichiers</div>
                 </div>
             </div>
 
@@ -349,8 +353,55 @@
 
                 <div class="form-card">
                     <h3>
+                        <i class="bi bi-person-badge"></i>
+                        Informations du Responsable
+                    </h3>
+                    <p class="text-muted mb-4">Ces informations permettront de créer votre compte Gérant sur la plateforme.</p>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ownerFirstName" class="form-label required">Prénom</label>
+                            <input type="text" class="form-control" id="ownerFirstName" placeholder="Ex: Ahmed" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ownerLastName" class="form-label required">Nom</label>
+                            <input type="text" class="form-control" id="ownerLastName" placeholder="Ex: Benali" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1O mb-3">
+                            <label for="ownerEmail" class="form-label required">Email de connexion</label>
+                            <input type="email" class="form-control" id="ownerEmail" placeholder="ahmed@arena.ma" required>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ownerPassword" class="form-label required">Mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-lock text-muted"></i></span>
+                                <input type="password" class="form-control border-start-0 ps-0" id="ownerPassword" placeholder="Minimum 8 caractères" required>
+                            </div>
+                            <div class="info-text">Ce mot de passe servira à accéder à votre espace Gérant.</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ownerPasswordConfirm" class="form-label required">Confirmer le mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-lock-fill text-muted"></i></span>
+                                <input type="password" class="form-control border-start-0 ps-0" id="ownerPasswordConfirm" placeholder="Répétez le mot de passe" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="form-card">
+                    <h3>
                         <i class="bi bi-info-circle"></i>
-                        Informations de base
+                        Informations du Club
                     </h3>
 
                     <div class="row">
@@ -368,14 +419,14 @@
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label for="phone" class="form-label required">Téléphone</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="+212 6 00 00 00 00" required>
+                            <label for="phone" class="form-label required">Téléphone de la réception (Réservations)</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="+212 5 00 00 00 00" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address" class="form-label required">Adresse</label>
-                        <input type="text" class="form-control" id="address" placeholder="123 Rue du Sport" required>
+                        <label for="address" class="form-label required">Adresse complète</label>
+                        <input type="text" class="form-control" id="address" placeholder="123 Rue du Sport, Kénitra" required>
                     </div>
                 </div>
 
@@ -457,42 +508,36 @@
                         <div class="col-md-3"><input type="time" class="form-control" id="lundi_fermeture" value="22:00"></div>
                         <div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="lundi_ferme"></div></div>
                     </div>
-
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-4"><label class="form-label mb-md-0">Mardi</label></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="mardi_ouverture" value="08:00"></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="mardi_fermeture" value="22:00"></div>
                         <div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="mardi_ferme"></div></div>
                     </div>
-
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-4"><label class="form-label mb-md-0">Mercredi</label></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="mercredi_ouverture" value="08:00"></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="mercredi_fermeture" value="22:00"></div>
                         <div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="mercredi_ferme"></div></div>
                     </div>
-
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-4"><label class="form-label mb-md-0">Jeudi</label></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="jeudi_ouverture" value="08:00"></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="jeudi_fermeture" value="22:00"></div>
                         <div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="jeudi_ferme"></div></div>
                     </div>
-
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-4"><label class="form-label mb-md-0">Vendredi</label></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="vendredi_ouverture" value="08:00"></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="vendredi_fermeture" value="22:00"></div>
                         <div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="vendredi_ferme"></div></div>
                     </div>
-
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-4"><label class="form-label mb-md-0">Samedi</label></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="samedi_ouverture" value="09:00"></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="samedi_fermeture" value="20:00"></div>
                         <div class="col-md-2"><div class="form-check"><input class="form-check-input" type="checkbox" id="samedi_ferme"></div></div>
                     </div>
-
                     <div class="row mb-2 align-items-center">
                         <div class="col-md-4"><label class="form-label mb-md-0">Dimanche</label></div>
                         <div class="col-md-3"><input type="time" class="form-control" id="dimanche_ouverture" value="09:00"></div>
@@ -501,56 +546,12 @@
                     </div>
                 </div>
 
-                <div class="form-card">
-                    <h3>
-                        <i class="bi bi-wallet2"></i>
-                        Tarification
-                    </h3>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="priceMin" class="form-label required">Prix minimum (DH/heure)</label>
-                            <input type="number" class="form-control" id="priceMin" min="0" step="10" placeholder="100" required>
-                        </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label for="priceMax" class="form-label required">Prix maximum (DH/heure)</label>
-                            <input type="number" class="form-control" id="priceMax" min="0" step="10" placeholder="300" required>
-                        </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Modes de paiement acceptés sur place</label>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="cb" name="payment" value="cb" checked>
-                                    <label class="form-check-label" for="cb">
-                                        <i class="bi bi-credit-card"></i> Carte bancaire (TPE)
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="especes" name="payment" value="especes" checked>
-                                    <label class="form-check-label" for="especes">
-                                        <i class="bi bi-cash"></i> Espèces
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="cancellationPolicy" class="form-label">Politique d'annulation</label>
-                        <select class="form-select" id="cancellationPolicy">
-                            <option value="flexible">Flexible - Annulation gratuite jusqu'à 24h avant</option>
-                            <option value="moderate">Modérée - Annulation gratuite jusqu'à 48h avant</option>
-                            <option value="stricte">Stricte - Annulation gratuite jusqu'à 7 jours avant</option>
-                            <option value="non-remboursable">Non remboursable</option>
-                        </select>
-                    </div>
-                </div>
+
+
 
                 <div class="form-card">
                     <h3>
@@ -568,10 +569,10 @@
                     </div>
 
                     <input type="file" id="imageUpload" multiple accept="image/*" class="d-none" onchange="handleImageUpload(event)">
-
-                    <div class="image-preview" id="imagePreview">
-                    </div>
+                    <div class="image-preview" id="imagePreview"></div>
                 </div>
+
+
 
                 <div class="form-card">
                     <h3>
@@ -582,20 +583,20 @@
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="terms" required>
                         <label class="form-check-label" for="terms">
-                            J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a>
+                            J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a> de SportsField.
                         </label>
                     </div>
 
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="accurate" required>
                         <label class="form-check-label" for="accurate">
-                            Je certifie que toutes les informations fournies sont exactes et à jour
+                            Je certifie que je suis le représentant légal de ce club et que toutes les informations fournies sont exactes.
                         </label>
                     </div>
 
                     <div class="alert alert-info">
                         <i class="bi bi-info-circle me-2"></i>
-                        Votre club sera examiné par notre équipe avant d'être publié. Ce processus prend généralement 24 à 48 heures.
+                        Votre dossier sera examiné par notre équipe d'administration avant validation. Ce processus prend généralement 24 à 48 heures.
                     </div>
                 </div>
 
@@ -650,36 +651,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-    function handleImageUpload(event) {
-        const previewContainer = document.getElementById('imagePreview');
-        const files = event.target.files;
 
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-
-            // Vérifier si c'est bien une image
-            if (!file.type.startsWith('image/')) continue;
-
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const div = document.createElement('div');
-                div.className = 'image-preview-item';
-
-                div.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <button type="button" class="remove-image" onclick="this.parentElement.remove()">
-                            <i class="bi bi-x"></i>
-                        </button>
-                    `;
-
-                previewContainer.appendChild(div);
-            }
-
-            reader.readAsDataURL(file);
-        }
-    }
-</script>
 </body>
 </html>
