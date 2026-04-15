@@ -28,23 +28,23 @@
         <p class="text-muted mb-4">Entrez le code reçu par email et choisissez un nouveau mot de passe.</p>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success"><i class="bi bi-check-circle me-2"></i>{{ session('success') }}</div>
-    @endif
-    @if($errors->any())
+    <?php if(session('success')): ?>
+        <div class="alert alert-success"><i class="bi bi-check-circle me-2"></i><?php echo e(session('success')); ?></div>
+    <?php endif; ?>
+    <?php if($errors->any()): ?>
         <div class="alert alert-danger">
-            <ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+            <ul class="mb-0"><?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><li><?php echo e($e); ?></li><?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?></ul>
         </div>
-    @endif
+    <?php endif; ?>
 
-    <form method="POST" action="{{ route('password.reset') }}">
-        @csrf
-        <input type="hidden" name="email" value="{{ $email }}">
+    <form method="POST" action="<?php echo e(route('password.reset')); ?>">
+        <?php echo csrf_field(); ?>
+        <input type="hidden" name="email" value="<?php echo e($email); ?>">
 
         <div class="mb-3">
             <label class="form-label fw-semibold">Code reçu par email</label>
             <input type="text" name="code" class="form-control code-input"
-                   placeholder="______" maxlength="6" value="{{ old('code') }}" required autocomplete="off">
+                   placeholder="______" maxlength="6" value="<?php echo e(old('code')); ?>" required autocomplete="off">
             <div class="form-text">Code valable 15 minutes.</div>
         </div>
 
@@ -79,10 +79,10 @@
     </form>
 
     <div class="text-center mt-2">
-        <a href="{{ route('password.forgot') }}" class="text-decoration-none text-muted small me-3">
+        <a href="<?php echo e(route('password.forgot')); ?>" class="text-decoration-none text-muted small me-3">
             <i class="bi bi-arrow-clockwise me-1"></i>Nouveau code
         </a>
-        <a href="{{ route('login') }}" class="text-decoration-none text-muted small">
+        <a href="<?php echo e(route('login')); ?>" class="text-decoration-none text-muted small">
             <i class="bi bi-arrow-left me-1"></i>Connexion
         </a>
     </div>
@@ -101,3 +101,4 @@ document.querySelector('.code-input').addEventListener('input', function() {
 </script>
 </body>
 </html>
+<?php /**PATH D:\xamppp\htdocs\PF\resources\views/auth/reset-password.blade.php ENDPATH**/ ?>

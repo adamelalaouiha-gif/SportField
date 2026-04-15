@@ -29,7 +29,7 @@
             <div>
                 <div class="logo-box">SF</div>
                 <h2 class="text-center fw-bold mb-4">Bienvenue sur SportsField</h2>
-                <p class="text-center mb-5 opacity-75">Réservez facilement vos terrains de sport préférés</p>
+                <p class="text-center mb-5 opacity-75">Réservez facilement vos terrains de sport préférés à Kénitra</p>
                 <div class="feature-item">
                     <div class="feature-icon"><i class="bi bi-search"></i></div>
                     <div><h5 class="mb-1">Recherche facile</h5><p class="mb-0 small opacity-75">Trouvez le terrain parfait près de chez vous</p></div>
@@ -94,7 +94,7 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>"
-                               placeholder="••••••••" required>
+                               placeholder="" required>
                         <span class="input-group-text bg-light border-start-0 password-toggle" onclick="togglePwd()">
                             <i class="bi bi-eye" id="toggleIcon"></i>
                         </span>

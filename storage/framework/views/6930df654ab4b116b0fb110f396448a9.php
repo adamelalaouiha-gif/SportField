@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        :root { --primary: #2563eb; --sidebar-bg: #1e1b4b; }
+        :root { --primary: #0ea5e9; --sidebar-bg: #1e293b; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; }
         .sidebar { width: 260px; min-height: 100vh; background: var(--sidebar-bg); position: fixed; top: 0; left: 0; z-index: 100; }
         .sidebar-logo { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
@@ -74,8 +74,7 @@
             <?php if(session('success')): ?>
                 <span class="badge bg-success"><?php echo e(session('success')); ?></span>
             <?php endif; ?>
-            <span class="fw-medium small"><?php echo e(auth()->user()->prenom); ?> <?php echo e(auth()->user()->nom); ?></span>
-            <span class="badge bg-purple" style="background:#7c3aed!important;">Super Admin</span>
+            <span class="badge bg-purple" style="background:#0ea5e9!important;">Espace Super Admin</span>
         </div>
     </div>
 

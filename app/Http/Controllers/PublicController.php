@@ -56,7 +56,7 @@ class PublicController extends Controller
             ],
             'adresse'                  => 'required|string|max:255',
             'sports'                   => 'required|array|min:1',
-            'photo'                    => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo'                    => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'prenom_responsable.required'        => 'Le prénom est obligatoire.',
             'nom_responsable.required'           => 'Le nom est obligatoire.',
@@ -72,10 +72,35 @@ class PublicController extends Controller
             'telephone_club.regex'               => 'Le numéro doit être un numéro marocain valide (ex: 0612345678 ou +212612345678).',
             'adresse.required'                   => "L'adresse est obligatoire.",
             'sports.required'                    => 'Sélectionnez au moins un sport.',
+            'photo.required'                     => 'La photo du club est obligatoire.',
             'photo.image'                        => 'Le fichier doit être une image.',
             'photo.mimes'                        => 'Format accepté : JPG, PNG.',
             'photo.max'                          => 'La photo ne doit pas dépasser 2 Mo.',
         ]);
+
+        // Validation des horaires : si ouverture remplie, fermeture obligatoire (et vice versa)
+        $errorsHoraires = [];
+        if ($request->horaires) {
+            foreach ($request->horaires as $jour => $heures) {
+                $ouv = !empty($heures['ouverture']);
+                $fer = !empty($heures['fermeture']);
+                if ($ouv && !$fer) {
+                    $errorsHoraires["horaires.$jour.fermeture"] = "Veuillez indiquer l'heure de fermeture pour $jour.";
+                } elseif (!$ouv && $fer) {
+                    $errorsHoraires["horaires.$jour.ouverture"] = "Veuillez indiquer l'heure d'ouverture pour $jour.";
+                } elseif ($ouv && $fer) {
+                    // 00:00 fermeture = minuit fin de journée → toujours valide
+                    $tOuv = strtotime($heures['ouverture']);
+                    $tFer = ($heures['fermeture'] === '00:00') ? strtotime('+1 day', strtotime('00:00')) : strtotime($heures['fermeture']);
+                    if ($tOuv >= $tFer) {
+                        $errorsHoraires["horaires.$jour.fermeture"] = "L'heure de fermeture de $jour doit être après l'heure d'ouverture.";
+                    }
+                }
+            }
+        }
+        if (!empty($errorsHoraires)) {
+            return back()->withErrors($errorsHoraires)->withInput();
+        }
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
@@ -87,7 +112,7 @@ class PublicController extends Controller
         if ($request->horaires) {
             foreach ($request->horaires as $jour => $heures) {
                 if (!empty($heures['ouverture']) && !empty($heures['fermeture'])) {
-                    $horaires[$jour] = $heures['ouverture'] . ' - ' . $heures['fermeture'];
+                    $horaires[$jour] = ['ouverture' => $heures['ouverture'], 'fermeture' => $heures['fermeture']];
                 }
             }
         }

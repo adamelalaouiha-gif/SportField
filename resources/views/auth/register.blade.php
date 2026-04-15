@@ -29,7 +29,7 @@
             <div>
                 <div class="logo-box">SF</div>
                 <h2 class="text-center fw-bold mb-4">Rejoignez SportsField</h2>
-                <p class="text-center mb-5 opacity-75">Créez votre compte et commencez à réserver dès aujourd'hui</p>
+                <p class="text-center mb-5 opacity-75">Créez votre compte et commencez à réserver à Kénitra dès aujourd'hui</p>
                 <div class="feature-item">
                     <div class="feature-icon"><i class="bi bi-search"></i></div>
                     <div><h5 class="mb-1">Recherche facile</h5><p class="mb-0 small opacity-75">Trouvez le terrain parfait près de chez vous</p></div>
@@ -57,7 +57,7 @@
                             <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
                             <input type="text" name="prenom"
                                    class="form-control border-start-0 @error('prenom') is-invalid @enderror"
-                                   placeholder="Jean" value="{{ old('prenom') }}" required>
+                                   placeholder="votre prenom" value="{{ old('prenom') }}" required>
                         </div>
                         @error('prenom')<div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>@enderror
                     </div>
@@ -67,7 +67,7 @@
                             <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
                             <input type="text" name="nom"
                                    class="form-control border-start-0 @error('nom') is-invalid @enderror"
-                                   placeholder="Dupont" value="{{ old('nom') }}" required>
+                                   placeholder="votre nom" value="{{ old('nom') }}" required>
                         </div>
                         @error('nom')<div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ $message }}</div>@enderror
                     </div>
@@ -88,7 +88,7 @@
                         <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
                         <input type="password" name="password" id="pwd1"
                                class="form-control border-start-0 border-end-0 @error('password') is-invalid @enderror"
-                               placeholder="••••••••" required minlength="8">
+                               placeholder="" required minlength="8">
                         <span class="input-group-text bg-light border-start-0 password-toggle" onclick="togglePwd('pwd1','ic1')">
                             <i class="bi bi-eye" id="ic1"></i>
                         </span>
@@ -102,7 +102,7 @@
                         <span class="input-group-text bg-light border-end-0"><i class="bi bi-shield-lock"></i></span>
                         <input type="password" name="password_confirmation" id="pwd2"
                                class="form-control border-start-0 border-end-0"
-                               placeholder="••••••••" required>
+                               placeholder="" required>
                         <span class="input-group-text bg-light border-start-0 password-toggle" onclick="togglePwd('pwd2','ic2')">
                             <i class="bi bi-eye" id="ic2"></i>
                         </span>

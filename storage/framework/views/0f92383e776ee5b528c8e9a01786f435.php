@@ -109,7 +109,7 @@
                     <div class="logo-box">SF</div>
                     <span class="fw-bold fs-5 text-white">SportsField</span>
                 </div>
-                <p class="small w-75">Votre plateforme de confiance pour réserver des terrains de clubs sportifs dans toute la ville.</p>
+                <p class="small w-75">Votre plateforme de confiance pour réserver des terrains de clubs sportifs dans toute Kénitra.</p>
             </div>
             <div class="col-md-4 mb-4 text-md-end">
                 <h5 class="mb-3">Navigation</h5>
