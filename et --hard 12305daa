@@ -1,0 +1,227 @@
+[33mcommit e194a34151d857bd1b9bbcf8b33f0152c50cbac1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: SADKI_DEV <sadkioussama53@gmail.com>
+Date:   Thu Apr 16 21:54:44 2026 +0100
+
+    reservation Demo
+
+[33mcommit 12305daaa3f2090d9205519b3458d07c7a08bb7a[m
+Author: Adam El Alaoui El Hanafi <adam.el.alaoui.ha@gmail.com>
+Date:   Wed Apr 15 15:19:48 2026 +0100
+
+    Update backend files
+
+[33mcommit 9dfce1fb74fb938a2855ce88edbf3ac99ebc96b4[m
+Author: Adam El Alaoui El Hanafi <adam.el.alaoui.ha@gmail.com>
+Date:   Mon Mar 30 15:38:41 2026 +0100
+
+    Initial commit:Laravel backend setup
+
+[33mcommit 2aabebb57e1757dd1773b28714b7cd956111c503[m
+Author: Adam El Alaoui El Hanafi <adam.el.alaoui.ha@gmail.com>
+Date:   Sat Mar 14 16:16:30 2026 +0000
+
+    Initial commit
+
+[33mcommit f1f2befaa81a4d41cc5fa419416e9ea858dc565d[m[33m ([m[1;33mtag: [m[1;33mv12.12.1[m[33m)[m
+Author: nuno maduro <enunomaduro@gmail.com>
+Date:   Tue Mar 10 19:58:02 2026 +0000
+
+    Uses unqualified names (#6760)
+
+[33mcommit 6b54a4df067604dc9f1abae4602928bc9b089975[m
+Author: taylorotwell <463230+taylorotwell@users.noreply.github.com>
+Date:   Tue Mar 10 16:17:50 2026 +0000
+
+    Update CHANGELOG
+
+[33mcommit b36082a239753c8bff7e2df152b534c675da7282[m[33m ([m[1;33mtag: [m[1;33mv12.12.0[m[33m)[m
+Author: Taylor Otwell <taylor@laravel.com>
+Date:   Mon Mar 9 09:42:33 2026 -0500
+
+    update index
+
+[33mcommit 41e7b8f00c1a5c7801a47fb42b51c30c27344e0e[m
+Author: AI MANSOURI <78476938+Husseinadq@users.noreply.github.com>
+Date:   Thu Feb 26 17:40:23 2026 +0300
+
+    Neutralize DB_URL in phpunit.xml test config (#6761)
+
+[33mcommit 9c073b079c1b3c72a4dacaa12579aca978ea5e6a[m
+Author: Apoorv Darshan <ad13dtu@gmail.com>
+Date:   Thu Feb 19 01:54:46 2026 +0530
+
+    [12.x] Add `APP_NAME` fallback in mail config (#6755)
+    
+    The `MAIL_FROM_NAME` config value falls back to the generic "Example"
+    when unset. This updates the fallback to use `APP_NAME` instead,
+    matching the convention in `.env.example` where `MAIL_FROM_NAME`
+    references `${APP_NAME}`.
+
+[33mcommit 8a119d7f4461c73b47197b80f4cecb3c97796919[m
+Author: Perry van der Meer <11609290+PerryvanderMeer@users.noreply.github.com>
+Date:   Thu Jan 29 04:32:16 2026 +0100
+
+    Update phpunit version to ^11.5.50 (#6746)
+
+[33mcommit 81ee06ed2b2941aaeffecfbcb373bd154f064f1c[m
+Author: taylorotwell <463230+taylorotwell@users.noreply.github.com>
+Date:   Tue Jan 20 17:30:53 2026 +0000
+
+    Update CHANGELOG
+
+[33mcommit 51cd69753265aee56bf69fd30ddec1191db06aed[m[33m ([m[1;33mtag: [m[1;33mv12.11.2[m[33m)[m
+Author: Pádraic Slattery <pgoslatara@gmail.com>
+Date:   Mon Jan 19 18:57:25 2026 +0100
+
+    chore: Update outdated GitHub Actions version (#6743)
+
+[33mcommit 31607246bd4debc01ad3e6d26c395c07dfa21755[m
+Author: KentarouTakeda <4785040+KentarouTakeda@users.noreply.github.com>
+Date:   Tue Jan 20 00:16:42 2026 +0900
+
+    [12.x] Add `APP_URL` fallback in filesystems config (#6742)
+
+[33mcommit e713de24b883712cbb7fbc12d9b3aa1460e28cb7[m
+Author: Jack Bayliss <jjbayliss@icloud.com>
+Date:   Thu Jan 15 14:49:36 2026 +0000
+
+    Revert "add index to failed jobs" (#6739)
+    
+    This reverts commit 36281b285a83c762446a9fe260ae95f76dfd35a6.
+
+[33mcommit be7c4b76ec69fd1e10faf2dd3b467b70505337c5[m
+Author: Jack Bayliss <jjbayliss@icloud.com>
+Date:   Tue Jan 13 14:45:09 2026 +0000
+
+    [12.x] Update jobs/cache migrations (#6736)
+    
+    * Update 0001_01_01_000001_create_cache_table.php
+    
+    * Update 0001_01_01_000002_create_jobs_table.php
+    
+    * Update 0001_01_01_000002_create_jobs_table.php
+    
+    ---------
+    
+    Co-authored-by: Taylor Otwell <taylor@laravel.com>
+
+[33mcommit 36281b285a83c762446a9fe260ae95f76dfd35a6[m
+Author: Taylor Otwell <taylor@laravel.com>
+Date:   Mon Jan 12 08:42:42 2026 -0600
+
+    add index to failed jobs
+
+[33mcommit cf85ab1ace218c3928c9fede9e02b8fa5747f5d1[m
+Author: Jack Bayliss <jjbayliss@icloud.com>
+Date:   Thu Jan 8 16:07:10 2026 +0000
+
+    Update composer.json (#6735)
+
+[33mcommit 45f8f070c03e23cf733ffda3df77096b133da23e[m
+Author: taylorotwell <463230+taylorotwell@users.noreply.github.com>
+Date:   Tue Jan 6 16:33:15 2026 +0000
+
+    Update CHANGELOG
+
+[33mcommit 591d3e89030a5b6cb1ca479f4ecead3d87f03895[m[33m ([m[1;33mtag: [m[1;33mv12.11.1[m[33m)[m
+Author: Mohammed Samgan Khan <mohdsamgankhan@gmail.com>
+Date:   Tue Dec 23 10:13:07 2025 -0500
+
+    fix: ensure APP_URL does not have trailing slash in filesystem public URL (#6728)
+
+[33mcommit f3613e9fb5f3b15008ec1f3c7db0c2614c3ef143[m
+Author: Robson Tenório <rrtenorio@gmail.com>
+Date:   Sun Dec 21 21:01:58 2025 -0300
+
+    Use environment variable for `DB_SSLMODE` for Postgres (#6727)
+    
+    ```php
+    'pgsql' => [
+       ...
+        'sslmode' => env('DB_SSLMODE', 'prefer'),
+    ]
+    ```
+
+[33mcommit ad4ca3e9a02ed4104f8a42657219fdbe199462eb[m
+Author: taylorotwell <463230+taylorotwell@users.noreply.github.com>
+Date:   Tue Dec 9 16:03:23 2025 +0000
+
+    Update CHANGELOG
+
+[33mcommit 7663a8ce4cfe7a6a0d45148b55a339a7d440647d[m[33m ([m[1;33mtag: [m[1;33mv12.11.0[m[33m)[m
+Author: MUHAMMAD QISTI AMALUDDIN BIN MOHD ROZAINI <119896181+QistiAmal1212@users.noreply.github.com>
+Date:   Wed Nov 26 06:16:01 2025 +0800
+
+    Ignore Laravel compiled views for Vite  (#6714)
+    
+    * Ignore Laravel compiled views for Vite
+    
+    Before testing, run php artisan cache:clear to clear old compiled views.
+    
+    This issue only happens during local development when running npm run dev.
+    Laravel continuously recompiles Blade into PHP inside storage/framework/views (especially after Livewire re-renders), and these files are changed by Laravel itself, not by us.
+    
+    Because of that, Vite thinks we modified a file and triggers a full reload—even though the change is purely internal framework logic. This makes the reload behavior unacceptable and noisy during development.
+    
+    Since these compiled views belong to Laravel’s backend logic and not frontend assets, Vite does not need to watch them.
+    
+    Ignoring storage/framework/views keeps Vite stable and prevents reloads caused by Laravel doing its own internal work.
+    
+    * Vite ignore rule now in one clean line
+
+[33mcommit 8500bcc5bdded80636ea8ea67a3522252c04f0f0[m
+Author: Ryan Schaefer <contact.devsquid@gmail.com>
+Date:   Mon Nov 24 09:21:50 2025 -0500
+
+    Fix 8.5 PDO Deprecation (#6710)
+    
+    Fixes the 8.5 PDO deprecation using the same implementation in laravel/framework (https://github.com/laravel/framework/blob/4e40cfd963a4e00fe1dc1982dd6e3c6cab51c825/config/database.php#L64)
+
+[33mcommit f6b2e79bdbfc5bf4a37ad16466cc06ad79cc9e8f[m
+Author: Joost de Bruijn <joostdebruijn@users.noreply.github.com>
+Date:   Tue Nov 18 20:23:48 2025 +0100
+
+    fix: cookies are not available for subdomains by default (#6705)
+
+[33mcommit 9401db1c86af7b83e23eff0921f1782d02b63eb0[m
+Author: taylorotwell <463230+taylorotwell@users.noreply.github.com>
+Date:   Wed Nov 12 17:01:46 2025 +0000
+
+    Update CHANGELOG
+
+[33mcommit 181249000391597d80b872169680f3921e951928[m[33m ([m[1;33mtag: [m[1;33mv12.10.1[m[33m)[m
+Author: Robin <129759474+robinmiau@users.noreply.github.com>
+Date:   Thu Nov 6 18:42:06 2025 +0100
+
+    Update schema URL in package.json (#6701)
+
+[33mcommit 10b782f1535005a06c3e74f7ec093ffaea3ac0e2[m
+Author: taylorotwell <463230+taylorotwell@users.noreply.github.com>
+Date:   Tue Nov 4 15:49:18 2025 +0000
+
+    Update CHANGELOG
+
+[33mcommit 76396a056d552b8a34077f151775037ac44b431a[m[33m ([m[1;33mtag: [m[1;33mv12.10.0[m[33m)[m
+Author: Barry vd. Heuvel <barryvdh@gmail.com>
+Date:   Tue Nov 4 16:00:21 2025 +0100
+
+    Add background driver (#6699)
+    
+    * Add background driver
+    
+    Adds settings for PR https://github.com/laravel/framework/pull/57648
+    
+    * Update queue.php
+    
+    ---------
+    
+    Co-authored-by: Taylor Otwell <taylor@laravel.com>
+
+[33mcommit 6576dc16cffc99e4559a6fb8c1c40f2b5653d0db[m
+Author: Taylor Otwell <taylor@laravel.com>
+Date:   Thu Oct 30 12:37:49 2025 -0500
+
+    update language
+
+[33mcommit 5480b2a1866556e078eeefc19fd058fe9eaef63a[m
+Author: taylorotwell <463230+taylorot
